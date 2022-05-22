@@ -515,7 +515,10 @@ footer =
             ]
         , p
             []
-            [ external_link "about.html" "More about this"
+            [ H.a
+                [ HA.href "about.html"
+                ]
+                [ text "More about this" ]
             , text "."
             ]
         ]
