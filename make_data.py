@@ -1,6 +1,6 @@
 import json
 
-num_items = 10
+num_items = 5
 
 with open('entries.json.fixed') as f:
     entries = []
@@ -20,6 +20,10 @@ def shorten(entry):
 
 short_entries = [shorten(e) for e in entries]
 small_entries = [e for e in short_entries if all(x>=0 and x<10 for x in e['seq'])]
+
+for d in small_entries:
+    if d['number'] == 3415:
+        print(d, all(x>=0 and x<10 for x in d['seq']))
 
 with open('entries.mjs','w') as f:
     f.write('export default ')

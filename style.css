@@ -1,21 +1,101 @@
+body {
+    font-family: sans-serif;
+}
+
+header {
+  display: grid;
+  justify-content: center;
+  grid-template: "title edition help" / auto auto auto;
+  grid-gap: 1em;
+  align-items: baseline;
+}
+
+header h1 {
+  grid-area: title;
+}
+.help-link {
+  text-decoration: none;
+  padding: 1em;
+  background: none;
+  border: none;
+  font-size: 1em;
+  align-self: center;
+  grid-area: help;
+}
+.help-link:hover {
+    background: #eee;
+}
+.help-link:active {
+    background: #ddd;
+}
+    
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  max-width: calc(6em*5 + 1em*4);
+  margin: 0 auto;
+  grid-gap: 0.5em;
+}
+
 .sequence {
     display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    grid-gap: 1em;
+    grid-gap: 0.2em 1em;
     list-style: none;
     margin: 0;
     padding: 0;
+    grid-template-columns: repeat(5,1fr);
+    width: 100%;
 }
 
-.sequence li {
-    width: 2em;
-    background: #eee;
-    padding: 1em;
+.sequence > li.guess {
+    width: 100%;
+    --background-colour: 0;
+    --background-saturation: 0%;
+    background: hsl(var(--background-colour), var(--background-saturation), 90%);
+    padding: 0.5em 1em;
     text-align: center;
     user-select: none;
     cursor: pointer;
+    height: 2em;
+    position:relative;
+    box-sizing: border-box;
+    line-height: 1em;
 }
+.sequence > li.guess::after {
+    position: absolute;
+    right: 0.2em;
+    top: 0;
+}
+.sequence > li.guess.incorrect {
+    --background-saturation: 70%;
+}
+.sequence > li.guess.incorrect::after {
+    content: "✗";
+}
+.sequence > .guess.later {
+    --background-colour: 240;
+    --background-saturation: 20%;
+}
+.sequence > .guess.later::after {
+    content: '⇒';
+}
+.sequence > .guess.somewhere {
+    --background-colour: 240;
+    --background-saturation: 70%;
+}
+.sequence > .guess.somewhere::after {
+    content: '↔';
+}
+.sequence > .guess.correct {
+    --background-colour: 120;
+    --background-saturation: 70%;
+    font-weight: bold;
+}
+.sequence > .guess.correct::after {
+    content: '✓';
+}
+
 
 .entry:hover {
     background: yellow;
@@ -26,9 +106,105 @@
 
 .turns {
     padding: 0;
+    list-style: none;
+    margin: 0;
+}
+.turns > li ~ li {
+    margin-top: 1em;
 }
 
-.guess.correct {
-    background: lightblue;
+.keypad {
+    display: grid;
+    grid-template-rows: repeat(3,2.4rem);
+    grid-template-columns: repeat(4,auto);
+    grid-gap: 1.2rem;
+    margin: 1em 0;
+    justify-content: center;
+}
+
+.matched-sequences p {
+  margin: 0;
+}
+
+button {
+  --button-colour: 240;
+  --button-saturation: 70%;
+  --button-lightness: 1;
+  border: 0.1em solid hsl(var(--button-colour),var(--button-saturation),calc(var(--button-lightness)*80%));
+  background: hsl(var(--button-colour),var(--button-saturation),calc(var(--button-lightness)*95%));
+  border-radius: 0.5em;
+  font-size: 1em;
+}
+.keypad button {
+  width: 4rem;
+  height: 100%;
+}
+button:hover,
+button:focus {
+  --button-lightness: 0.9;
+}
+.keypad button:active {
+    --button-saturation: 100%;
+  --button-lightness: 0.7;
+}
+.keypad button:disabled {
+    --button-saturation: 0%;
+}
+
+.keypad button.backspace {
+    --button-colour: 120;
+    grid-column: 4;
+    grid-row: 1;
+}
+.keypad button.submit {
+    --button-colour: 60;
     font-weight: bold;
+}
+
+.matched-sequences {
+  grid-column: span 5;
+}
+
+.oeis-entry-link {
+    font-family: monospace;
+}
+
+.hint {
+    text-align: center;
+}
+
+
+.finished .oeis-entry-link {
+  font-size: 1.5em;
+}
+.finished {
+  background: hsl(120,50%,95%);
+  padding: 1em;
+}
+
+
+p {
+  margin: 0.5em 0;
+}
+p:first-child {
+  margin-top: 0;
+}
+
+
+.help li ~ li {
+  margin-top: 1em;
+}
+
+
+.start-game {
+  padding: 1em 2em;
+  justify-self: center;
+}
+
+footer {
+    margin-top: 5em;
+}
+
+.no-bullets {
+    list-style: none;
 }

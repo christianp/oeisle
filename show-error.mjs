@@ -1,4 +1,4 @@
-fetch('/error.txt').then(r=>{
+export default fetch('/error.txt').then(r=>{
     if(r.ok) {
         return r.text();
     } else {
@@ -6,7 +6,7 @@ fetch('/error.txt').then(r=>{
     }
 }).then(text => {
     if(!text) {
-        return;
+        return false;
     }
     document.body.innerHTML = '';
     const error_show = document.createElement('pre');
@@ -17,4 +17,5 @@ fetch('/error.txt').then(r=>{
     error_show.style['font-size'] = '16px';
     error_show.textContent = text;
     document.body.appendChild(error_show);
-}).catch(e=>{});
+    return true;
+}).catch(e => false);
